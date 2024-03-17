@@ -1,0 +1,33 @@
+const loginCsServer = require('./loginCsServer');
+const authCallback = require('./authCallback');
+const candidateUpdate = require('./webhooks/candidateUpdate');
+const candidateCreate = require('./webhooks/candidateCreate');
+const envelopeFailed = require('./webhooks/envelopeFailed');
+const envelopeBounced = require('./webhooks/envelopeBounced');
+const envelopeCancelled = require('./webhooks/envelopeCancelled');
+const envelopeOpened = require('./webhooks/envelopeOpened');
+const envelopeSigned = require('./webhooks/envelopeSigned');
+const envelopeRejected = require('./webhooks/envelopeRejected');
+const adminFrontend = require('./adminFrontend');
+const compliancyLogs = require('./compliancyLogs');
+const referenceLogs = require('./referenceLogs');
+const checkCandidateCompliancy = require('./checkCandidateCompliancy');
+const monitorEndpoints = require('./monitorEndpoints');
+
+module.exports = (app) => {
+    app.use(loginCsServer);
+    app.use(authCallback);
+    app.use(candidateUpdate);
+    app.use(candidateCreate);
+    app.use(envelopeFailed);
+    app.use(envelopeBounced);
+    app.use(envelopeCancelled);
+    app.use(envelopeOpened);
+    app.use(envelopeSigned);
+    app.use(envelopeRejected);
+    app.use(adminFrontend);
+    app.use(compliancyLogs);
+    app.use(referenceLogs);
+    app.use(checkCandidateCompliancy);
+    app.use(monitorEndpoints);
+};
