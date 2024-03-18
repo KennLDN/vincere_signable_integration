@@ -91,6 +91,8 @@ export default {
         CandidateUpdateQueue: "Unprocessed Candidate Updates",
         CompliancyLogs: "Compliancy Logs",
         LastProcessedTimestamp: "Ensure",
+        ReferenceLogs: "Reference Logs",
+        ReferenceQueue: "Reference Queue",
         Token: "Token",
         UserToken: "User Tokens",
         Users: "Users"
@@ -101,6 +103,8 @@ export default {
         CandidateUpdateQueue: "should be empty or low",
         CompliancyLogs: "amount of compliancy changes recorded",
         LastProcessedTimestamp: "should always be one",
+        ReferenceLogs: "stores all reference logs",
+        ReferenceQueue: "references waiting to be sent out",
         Token: "should always be one",
         UserToken: "users currently logged into admin panel",
         Users: "users currently tracked on vincere"

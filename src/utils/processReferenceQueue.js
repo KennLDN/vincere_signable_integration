@@ -19,11 +19,21 @@ const processEntry = async (entry, referenceLog, msgKey, statusKey, fingerprintK
         const user = await User.findOne({ id: entry.userId });
         if (!user || !user.signable_id) {
             logger.res({ msg: `User with ID ${entry.userId} not found or missing signable_id.` });
+            referenceLog[statusKey] = -1;
+            referenceLog[userKey] = entry.userId;
+            referenceLog[dateKey] = new Date().toISOString();
+            referenceLog[msgKey] = "user does not have a signable account.";
+            await referenceLog.save();
             return;
         }
 
         if (!candidateInfo || !candidateInfo.first_name || !candidateInfo.last_name) {
             logger.res({ msg: `Candidate with ID ${entry.entityId} not found or missing name.` });
+            referenceLog[statusKey] = -1;
+            referenceLog[userKey] = entry.userId;
+            referenceLog[dateKey] = new Date().toISOString();
+            referenceLog[msgKey] = "candidate could not be found? this should not happen.";
+            await referenceLog.save();
             return;
         }
 

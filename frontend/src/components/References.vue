@@ -1,5 +1,5 @@
 <template>
-  <div class="reference-page max-w-4xl">
+  <div class="reference-page max-w-full">
     <h2 class="text-gray-800">Reference Logs</h2>
     <div class="search-bar w-64 mb-4">
       <input
@@ -10,25 +10,40 @@
         @input="debouncedFetchLogs()"
       />
     </div>
+    <div class="flex gap-4 items-center w-64">
+      <div class="flex gap-1">
+        <div class="w-4 h-4 bg-gray-300"></div>
+        N/A
+      </div>
+      <div class="flex gap-1">
+        <div class="w-4 h-4 bg-red-300"></div>
+        Errored
+      </div>
+      <div class="flex gap-1">
+        <div class="w-4 h-4 bg-yellow-200"></div>
+        Sent
+      </div>
+      <div class="flex gap-1">
+        <div class="w-4 h-4 bg-green-300"></div>
+        Signed/Opened
+      </div>
+    </div>
     <table v-if="logs.length > 0">
       <thead>
         <tr class="bg-[#548c06] text-gray-200 text-sm">
           <th class="px-2 py-2"></th>
-          <th class="px-2 py-2" colspan="4">Field 1</th>
-          <th class="px-2 py-2" colspan="4">Field 2</th>
-          <th class="px-2 py-2" colspan="4">Field 3</th>
+          <th class="px-2 py-3" colspan="3">Field 1</th>
+          <th class="px-2 py-3" colspan="3">Field 2</th>
+          <th class="px-2 py-3" colspan="3">Field 3</th>
         </tr>
         <tr class="bg-[#548c06] text-gray-200 text-sm">
           <th class="px-2 py-2">Candidate</th>
-          <th class="px-2 py-2">Status</th>
           <th class="px-2 py-2">User</th>
           <th class="px-2 py-2">Message</th>
           <th class="px-2 py-2">Date</th>
-          <th class="px-2 py-2">Status</th>
           <th class="px-2 py-2">User</th>
           <th class="px-2 py-2">Message</th>
           <th class="px-2 py-2">Date</th>
-          <th class="px-2 py-2">Status</th>
           <th class="px-2 py-2">User</th>
           <th class="px-2 py-2">Message</th>
           <th class="px-2 py-2">Date</th>
@@ -36,19 +51,16 @@
       </thead>
       <tbody>
         <tr v-for="(log, index) in logs" :key="log.candidateId" class="text-xs">
-          <td class="px-2 py-1" :class="getStatusClass(0, index)">{{ log.candidateName }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.oneStatus, index)">{{ log.oneStatus !== 0 ? log.oneStatus : '' }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.oneStatus, index)">{{ log.oneUsername !== 'Unknown User' ? log.oneUsername : '' }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.oneStatus, index)">{{ log.oneMsg }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.oneStatus, index)">{{ formatDate(log.oneDate) !== 'N/A' ? formatDate(log.oneDate) : '' }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.twoStatus, index)">{{ log.twoStatus !== 0 ? log.twoStatus : '' }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.twoStatus, index)">{{ log.twoUsername !== 'Unknown User' ? log.twoUsername : '' }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.twoStatus, index)">{{ log.twoMsg }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.twoStatus, index)">{{ formatDate(log.twoDate) !== 'N/A' ? formatDate(log.twoDate) : '' }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.threeStatus, index)">{{ log.threeStatus !== 0 ? log.threeStatus : '' }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.threeStatus, index)">{{ log.threeUsername !== 'Unknown User' ? log.threeUsername : '' }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.threeStatus, index)">{{ log.threeMsg }}</td>
-          <td class="px-2 py-1" :class="getStatusClass(log.threeStatus, index)">{{ formatDate(log.threeDate) !== 'N/A' ? formatDate(log.threeDate) : '' }}</td>
+          <td class="px-2 py-2" :class="getStatusClass(0, index)">{{ log.candidateName }}</td>
+          <td class="px-2 py-2" :class="getStatusClass(log.oneStatus, index)">{{ log.oneUsername !== 'Unknown User' ? log.oneUsername : '' }}</td>
+          <td class="px-2 py-2" :class="getStatusClass(log.oneStatus, index)">{{ log.oneMsg }}</td>
+          <td class="px-2 py-2" :class="getStatusClass(log.oneStatus, index)">{{ formatDate(log.oneDate) !== 'N/A' ? formatDate(log.oneDate) : '' }}</td>
+          <td class="px-2 py-2" :class="getStatusClass(log.twoStatus, index)">{{ log.twoUsername !== 'Unknown User' ? log.twoUsername : '' }}</td>
+          <td class="px-2 py-2" :class="getStatusClass(log.twoStatus, index)">{{ log.twoMsg }}</td>
+          <td class="px-2 py-2" :class="getStatusClass(log.twoStatus, index)">{{ formatDate(log.twoDate) !== 'N/A' ? formatDate(log.twoDate) : '' }}</td>
+          <td class="px-2 py-2" :class="getStatusClass(log.threeStatus, index)">{{ log.threeUsername !== 'Unknown User' ? log.threeUsername : '' }}</td>
+          <td class="px-2 py-2" :class="getStatusClass(log.threeStatus, index)">{{ log.threeMsg }}</td>
+          <td class="px-2 py-2" :class="getStatusClass(log.threeStatus, index)">{{ formatDate(log.threeDate) !== 'N/A' ? formatDate(log.threeDate) : '' }}</td>
 
         </tr>
       </tbody>

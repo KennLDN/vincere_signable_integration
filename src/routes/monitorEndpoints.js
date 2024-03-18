@@ -12,6 +12,8 @@ const models = {
     CandidateUpdateQueue: require('../models/CandidateUpdateQueue'),
     CompliancyLogs: require('../models/CompliancyLogs'),
     LastProcessedTimestamp: require('../models/LastProcessedTimestamp'),
+    ReferenceLogs: require('../models/ReferenceLogs'),
+    ReferenceQueue: require('../models/ReferenceQueue'),
     Token: require('../models/Token'),
     UserToken: require('../models/UserToken'),
     Users: require('../models/Users')
@@ -56,6 +58,8 @@ router.get('/monitor-dbs', async (req, res) => {
             CandidateUpdateQueue: 34,
             CompliancyLogs: 84,
             LastProcessedTimestamp: 18,
+            ReferenceLogs: 256,
+            ReferenceQueue: 164,
             Token: 218,
             Users: 118,
             UserToken: 175

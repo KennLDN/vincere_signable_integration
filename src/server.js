@@ -41,7 +41,7 @@ refreshToken().then(() => {
     });
 });
 
-/*checkAndPopulateCompliancy()*/
+/*checkAndPopulateCompliancy()*/ /* Use if server has been offline for a while and missed candidates */
 fetchAndStoreUsers();
 
 // CLEAR USER TOKEN SCRIPT
@@ -51,7 +51,7 @@ clearUserToken();
 */
 
 // CLEAR REFERENCE LOGS SCRIPT
-
+/*
 const clearReferenceLogs = require('./scripts/clearReferenceLogs');
 clearReferenceLogs();
 
@@ -59,7 +59,7 @@ clearReferenceLogs();
 
 const clearReferenceQueue = require('./scripts/clearReferenceQueue');
 clearReferenceQueue();
-
+*/
 
 // WEBHOOK CREATION SCRIPT
 /*
