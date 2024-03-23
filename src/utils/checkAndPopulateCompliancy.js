@@ -12,12 +12,13 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function checkAndPopulateCompliancy() {
     let existingIds = await CandidateCompliancy.find().sort({ candidateId: 1 }).distinct('candidateId');
-    let maxIdInDb = existingIds.length > 0 ? Math.max(...existingIds) : 62799;
     let consecutiveFailures = 0;
     let addedEntries = 0;
     let requestCount = 0;
     let startTime = Date.now();
-    let id = 62800;
+
+    const currentCount = await CandidateCompliancy.countDocuments();
+    let id = 62800 + currentCount;
 
     let skipStart = null;
     let skipEnd = null;

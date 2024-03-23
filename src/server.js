@@ -1,4 +1,5 @@
 const connectDB = require('./config/database');
+const { connectRedis } = require('./config/redis');
 const express = require('express');
 const dotenv = require('dotenv');
 const { port } = require('./config');
@@ -21,6 +22,7 @@ dotenv.config();
 const startTime = Date.now();
 
 connectDB();
+connectRedis();
 
 const app = express();
 app.use(cookieParser());
@@ -41,7 +43,7 @@ refreshToken().then(() => {
     });
 });
 
-/*checkAndPopulateCompliancy()*/ /* Use if server has been offline for a while and missed candidates */
+// checkAndPopulateCompliancy(); /* Use if server has been offline for a while and missed candidates */
 fetchAndStoreUsers();
 
 // CLEAR USER TOKEN SCRIPT

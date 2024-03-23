@@ -6,6 +6,7 @@
     "express": "^4.18.2",
     "mongoose": "^8.1.1",
     "node-cron": "^3.0.3",
-    "os-utils": "^0.0.14"
+    "os-utils": "^0.0.14",
+    "redis": "^4.6.13"
   }
 }

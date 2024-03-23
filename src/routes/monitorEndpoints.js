@@ -62,7 +62,7 @@ router.get('/monitor-dbs', async (req, res) => {
             ReferenceQueue: 164,
             Token: 218,
             Users: 118,
-            UserToken: 175
+            UserToken: 175,
         };
 
         const dbStats = await Promise.all(Object.entries(models).map(async ([modelName, model]) => {

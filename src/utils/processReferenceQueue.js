@@ -24,6 +24,7 @@ const processEntry = async (entry, referenceLog, msgKey, statusKey, fingerprintK
             referenceLog[dateKey] = new Date().toISOString();
             referenceLog[msgKey] = "user does not have a signable account.";
             await referenceLog.save();
+            await ReferenceQueue.deleteOne({ _id: entry._id });
             return;
         }
 
@@ -34,6 +35,7 @@ const processEntry = async (entry, referenceLog, msgKey, statusKey, fingerprintK
             referenceLog[dateKey] = new Date().toISOString();
             referenceLog[msgKey] = "candidate could not be found? this should not happen.";
             await referenceLog.save();
+            await ReferenceQueue.deleteOne({ _id: entry._id });
             return;
         }
 
@@ -88,6 +90,7 @@ const processEntry = async (entry, referenceLog, msgKey, statusKey, fingerprintK
         referenceLog[dateKey] = new Date().toISOString();
         referenceLog[msgKey] = "error sending reference request";
         await referenceLog.save();
+        await ReferenceQueue.deleteOne({ _id: entry._id });
     }
 };
 
