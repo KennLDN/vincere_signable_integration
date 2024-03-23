@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 const ReferenceLogs = require("../models/ReferenceLogs");
 const ReferenceQueue = require("../models/ReferenceQueue");
+const InvalidEmails = require("../models/InvalidEmails");
 const fetchCandidateCustomFields = require("../scripts/fetchCandidateCustomFields");
 const { isEmailValid } = require("./validators");
 const logger = require('./logger')('REFERENCE FIELDS PROCESS');
@@ -19,6 +20,11 @@ const checkReferenceFields = async (entityId, userId) => {
         const typeFieldValue = customFields.find(field => field.key === process.env[`REFERENCE_${i}_TYPE`])?.field_value_ids;
         const contactFieldValue = customFields.find(field => field.key === process.env[`REFERENCE_${i}_CONTACT`])?.field_value;
         const emailFieldValue = customFields.find(field => field.key === process.env[`REFERENCE_${i}_EMAIL`])?.field_value;
+
+        const isInvalidEmail = await InvalidEmails.findOne({ email: emailFieldValue });
+        if (isInvalidEmail) {
+            continue;
+        }
 
         const allFields = [process.env.REFERENCE_SCHL_FIELDS, process.env.REFERENCE_PROF_FIELDS, process.env.REFERENCE_CHAR_FIELDS].join(',').split(',');
         let entryType = null;

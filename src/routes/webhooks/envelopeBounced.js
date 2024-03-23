@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('../../utils/logger')('ENVELOPE BOUNCED WEBHOOK');
 const ReferenceLogs = require('../../models/ReferenceLogs');
+const InvalidEmails = require('../../models/InvalidEmails');
 
 const router = express.Router();
 
@@ -9,12 +10,16 @@ router.post('/eb-webhook', bodyParser.text({ type: '*/*' }), async (req, res) =>
   try {
     const params = new URLSearchParams(req.body);
     const envelopeFingerprint = params.get('envelope_fingerprint');
+    const bouncedEmail = params.get('envelope_bounce_email');
 
-    if (!envelopeFingerprint) {
-      throw new Error('Envelope fingerprint not found in webhook payload');
+    if (!envelopeFingerprint || !bouncedEmail) {
+      throw new Error('Envelope fingerprint or bounced email not found in webhook payload');
     }
 
-    logger.res({ msg: `Webhook received with envelope fingerprint: ${envelopeFingerprint}` });
+    logger.res({ msg: `Webhook received with envelope fingerprint: ${envelopeFingerprint} and bounced email: ${bouncedEmail}` });
+
+    await InvalidEmails.create({ email: bouncedEmail });
+    logger.res({ msg: `Invalid email logged: ${bouncedEmail}` });
 
     const updateConditions = [
       { oneFingerprint: envelopeFingerprint },
